@@ -22,6 +22,7 @@ export default class AppContainer extends Component {
     this.next = this.next.bind(this);
     this.prev = this.prev.bind(this);
     this.selectAlbum = this.selectAlbum.bind(this);
+    this.selectArtist = this.selectArtist.bind(this);
     this.deselectAlbum = this.deselectAlbum.bind(this);
   }
 
@@ -102,6 +103,18 @@ export default class AppContainer extends Component {
       }));
   }
 
+  selectArtist(artistId) {
+    axios.get(`/api/artists/${artistId}`)
+      .then(res => res.data)
+      .then(artist => this.setState({
+        selectedArtist: artist
+      }));
+
+    axios.get(`/api/artists/${artistId}/albums`)
+      .then(res => res.data)
+      .then(dataArr => this.setState({selectedArtistAlbums: convertAlbums(dataArr)}));
+  }
+
   deselectAlbum() {
     this.setState({ selectedAlbum: {} });
   }
@@ -128,26 +141,12 @@ export default class AppContainer extends Component {
               selectAlbum: this.selectAlbum, // note that this.selectAlbum is a method, and this.state.selectedAlbum is the chosen album
 
               // Artists (plural) components's props
-              artists: this.state.artists
+              artist: this.state.selectedArtist,
+              artistAlbums: this.state.selectedArtistAlbums,
+              artists: this.state.artists,
+              selectArtist: this.selectArtist
             })
-
-
           }
-
-
-          {/*{*/}
-          {/*this.state.selectedAlbum.id ?*/}
-          {/*<Album*/}
-          {/*album={this.state.selectedAlbum}*/}
-          {/*currentSong={this.state.currentSong}*/}
-          {/*isPlaying={this.state.isPlaying}*/}
-          {/*toggleOne={this.toggleOne}*/}
-          {/*/> :*/}
-          {/*<Albums*/}
-          {/*albums={this.state.albums}*/}
-          {/*selectAlbum={this.selectAlbum}*/}
-          {/*/>*/}
-          {/*}*/}
         </div>
         <Player
           currentSong={this.state.currentSong}
