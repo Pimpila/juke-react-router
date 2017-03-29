@@ -1,4 +1,4 @@
-import React from 'react';
-
-
-export default Artist;
+// import React from 'react';
+//
+//
+// export default Artist;

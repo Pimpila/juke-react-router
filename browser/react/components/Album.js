@@ -15,14 +15,19 @@ class Album extends React.Component {
     return (
       <div className="album">
         <div>
-          <h3>{this.props.album && this.props.album.name}</h3>
-          <img src={this.props.album && this.props.album.imageUrl} className="img-thumbnail" />
+          {this.props.album && (
+            <div>
+              <h3>{ this.props.album.name}</h3>
+              <img src={ this.props.album.imageUrl} className="img-thumbnail" />
+              <Songs
+                songs={this.props.album && this.props.album.songs}
+                currentSong={this.props.currentSong}
+                isPlaying={this.props.isPlaying}
+                toggleOne={this.props.toggleOne} />
+            </div>
+          )}
         </div>
-        <Songs
-          songs={this.props.album && this.props.album.songs}
-          currentSong={this.props.currentSong}
-          isPlaying={this.props.isPlaying}
-          toggleOne={this.props.toggleOne} />
+
       </div>
     );
   }
