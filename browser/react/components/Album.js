@@ -1,33 +1,31 @@
-import React { Component } from 'react';
+import React from 'react';
 import Songs from '../components/Songs';
 
-class Album extends Component {
+class Album extends React.Component {
+  constructor(props) {
+    super(props);
 
-    constructor(props){
-      super(props);
-      this.state = {};
+  }
 
-    }
-      // const album = this.props.album;
-      // const currentSong = this.props.currentSong;
-      // const isPlaying = this.props.isPlaying;
-      // const toggleOne = this.props.toggleOne;
-      //
-    render() {
-        return (
-            <div className="album">
-                <div>
-                    <h3>{ album.name }</h3>
-                      <img src={ album.imageUrl } className="img-thumbnail"/>
-                  </div>
-                  <Songs
-                      songs={album.songs}
-                      currentSong={currentSong}
-                      isPlaying={isPlaying}
-                      toggleOne={toggleOne}/>
-              </div>
-          );
-      }
+  componentDidMount() {
+      this.props.selectAlbum(this.props.params.albumId)
+  }
+
+  render() {
+    return (
+      <div className="album">
+        <div>
+          <h3>{this.props.album && this.props.album.name}</h3>
+          <img src={this.props.album && this.props.album.imageUrl} className="img-thumbnail" />
+        </div>
+        <Songs
+          songs={this.props.album && this.props.album.songs}
+          currentSong={this.props.currentSong}
+          isPlaying={this.props.isPlaying}
+          toggleOne={this.props.toggleOne} />
+      </div>
+    );
+  }
 }
 
 export default Album;
